@@ -38,6 +38,7 @@ if [ ! -d cassandra ]; then
 fi
 
 sed -i ".bak" \
+  -e "s/^cluster_name:.*/cluster_name: 'Cassandra Lunch and Learn cluster'/" \
   -e "s/^listen_address:.*/listen_address: ${ip}/" \
   -e "s/^rpc_address:.*/rpc_address: ${ip}/" \
   -e "s/^\(.*seeds: \).*$/\1${seed}/" \

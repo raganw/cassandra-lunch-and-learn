@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -xe
+export CQLSH_HOST=$(ifconfig | grep 172. | awk '{ print $2 }')
+
+cassandra/bin/cqlsh $@

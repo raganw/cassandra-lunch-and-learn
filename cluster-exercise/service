@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -xe
+
+cmd=$1
+case $cmd in
+  stop) kill $(cat cassandra.pid) ;;
+  start) cassandra/bin/cassandra -p cassandra.pid 2>&1 >/dev/null ;;
+  *)
+    echo "usage: $0 [start|stop]"
+    exit 1
+esac
