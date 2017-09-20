@@ -1,0 +1,12 @@
+{
+  "name": "slideshow",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "generate": "md2gslides ./cassandra-lunch-and-learn/cassandra-lunch-and-learn.md"
+  },
+  "dependencies": {
+    "md2gslides": "^0.3.0"
+  }
+}
