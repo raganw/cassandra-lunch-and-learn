@@ -2,7 +2,7 @@
 
 set -xe
 
-ip=$(ifconfig | grep 172.19.12 | awk '{ print $2 }')
+ip=$(ifconfig | grep 172. | awk '{ print $2 }')
 seed="${ip}"
 
 while getopts ":s:" opt; do
@@ -46,4 +46,5 @@ sed -i ".bak" \
   -e "s/JMX_PORT=.*/JMX_PORT=17199/" \
   cassandra/conf/cassandra-env.sh
 
-echo "Your IP is ${ip}"
+echo "Seeding cassandra with ${seed}"
+echo "Binding cassandra to your IP at ${ip}"
