@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -xe
+set -e
 
 ip=$(ifconfig | grep 172. | awk '{ print $2 }')
 seed="${ip}"
