@@ -2,5 +2,18 @@
 
 set -e
 export CQLSH_HOST=$(ifconfig | grep 172. | awk '{ print $2 }')
-
-cassandra/bin/cqlsh $@
+while getopts ":e:f:" opt; do
+  case "$opt" in
+    e)
+      args="-e \"${OPTARG}\""
+      ;;
+    f)
+      args="-f \"${OPTARG}\""
+      ;;
+    *)
+      exit 0
+      ;;
+  esac
+done
+cmd="cassandra/bin/cqlsh ${args}"
+eval "$cmd"
