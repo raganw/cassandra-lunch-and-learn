@@ -22,6 +22,13 @@ $ ./service start
 $ ./service stop
 ```
 
+## `nodetool` and `cqlsh`
+Wrapper scripts that properly set hosts are provided in this directory.
+Run them with `./nodetool`, `./cqlsh`, etc...
+
+Alternatively, you could set the current directory in your execution path.
+`export PATH=".:$PATH"`
+
 ### Logs
 This instance of cassandra will put its logs under `./cassandra/logs`.  It will
 be helpful and insightful to have a terminal open tailing this log:
