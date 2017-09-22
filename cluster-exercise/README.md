@@ -1,4 +1,5 @@
 # Cluster Exercise
+NOTE: Don't be connected to the VPN when doing this, please.
 
 This is a collection of scripts for running an isolated instance of cassandra
 and allow for easier clustering between laptops connected to our LAN.
@@ -146,5 +147,12 @@ $ ./cqlsh -e "SELECT * FROM replicated_data.people WHERE age = 25"
 Let's take down one of the nodes in the cluster and see what happens.
 
 ```
-$ ./cqlsh -e "INSERT INTO people (id, name, age, height, location, phones) VALUES (6, 'John', 26, 5.9, {state: 'WA', city: 'Seattle', zip_code: 98119, street: '4th Street'}, {'2065551212'})"
+$ ./cqlsh
+# Now we're in the cqlsh repl
+cqlsh> CONSISTENCY ALL;
+cqlsh> INSERT INTO replicated_data.people (id, name, age, height, location, phones) VALUES (6, 'John', 26, 5.9, {state: 'WA', city: 'Seattle', zip_code: 98119, street: '4th Street'}, {'2065551212'});
+# Fails since it cannot get acknowledgment from all nodes that would own this data (replication factor 3)
+cqlsh> CONSISTENCY QUORUM;
+cqlsh> INSERT INTO replicated_data.people (id, name, age, height, location, phones) VALUES (6, 'John', 26, 5.9, {state: 'WA', city: 'Seattle', zip_code: 98119, street: '4th Street'}, {'2065551212'});
+# Succeed because it can get acknowledgment from quorum = floor((replication_factor / 2) + 1)
 ```

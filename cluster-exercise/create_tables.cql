@@ -1,6 +1,6 @@
 USE replicated_data;
 
-# Create a User-Defined Type https://cassandra.apache.org/doc/latest/cql/types.html?highlight=frozen#user-defined-types
+/* Create a User-Defined Type https://cassandra.apache.org/doc/latest/cql/types.html?highlight=frozen#user-defined-types */
 CREATE TYPE IF NOT EXISTS address (
 	state text,
 	city text,
@@ -8,7 +8,7 @@ CREATE TYPE IF NOT EXISTS address (
 	street text,
 );
 
-# Create a Table that uses the UDT
+/* Create a Table that uses the UDT */
 CREATE TABLE IF NOT EXISTS people (
 	id int,
 	name text,
