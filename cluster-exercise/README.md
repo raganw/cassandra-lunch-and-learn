@@ -31,6 +31,8 @@ $ tail -F cassandra/logs/system.log
 
 ## Exercises
 
+[CQL Documentation](https://cassandra.apache.org/doc/latest/cql/index.html)
+
 ### Form a cluster
 As a group, decide on one person's node to be the seed, then have the others
 in the group setup their node with the designated seed node's IP (see
@@ -150,9 +152,32 @@ Let's take down one of the nodes in the cluster and see what happens.
 $ ./cqlsh
 # Now we're in the cqlsh repl
 cqlsh> CONSISTENCY ALL;
+
 cqlsh> INSERT INTO replicated_data.people (id, name, age, height, location, phones) VALUES (6, 'John', 26, 5.9, {state: 'WA', city: 'Seattle', zip_code: 98119, street: '4th Street'}, {'2065551212'});
+
 # Fails since it cannot get acknowledgment from all nodes that would own this data (replication factor 3)
+
 cqlsh> CONSISTENCY QUORUM;
+
 cqlsh> INSERT INTO replicated_data.people (id, name, age, height, location, phones) VALUES (6, 'John', 26, 5.9, {state: 'WA', city: 'Seattle', zip_code: 98119, street: '4th Street'}, {'2065551212'});
+
 # Succeed because it can get acknowledgment from quorum = floor((replication_factor / 2) + 1)
 ```
+
+
+### Working with counters
+We can create a table with a counter like so:
+```
+$ ./cqlsh -f create_counter_table.cql
+$ ./cqlsh -e "SELECT * FROM replicated_data.counts"
+$ ./cqlsh -f update_counts.sql
+$ ./cqlsh -e "SELECT * FROM replicated_data.counts"
+```
+
+Increment the counter like so:
+```
+$ ./cqlsh
+
+cqlsh> UPDATE counts SET value=value+1 WHERE name='metric_1' AND type='counter';
+```
+
